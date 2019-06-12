@@ -28,13 +28,13 @@ window.join = function join(channel) { channel.join()
                                        .receive("error", response => {
                                            console.log("Unable to join", response) })
                                      }
-window.leave = function leave(channel) { channel.leave()
-                          .receive("ok", response => {
-                              console.log("Left successfully", response)
-                          })
-                          .receive("error", response => {
-                              console.log("Unable to leave", response) })
-                        }
+// window.leave = function leave(channel) { channel.leave()
+//                           .receive("ok", response => {
+//                               console.log("Left successfully", response)
+//                           })
+//                           .receive("error", response => {
+//                               console.log("Unable to leave", response) })
+//                         }
 
 var game_channel = new_channel("moon", "moon")
 join(game_channel)
