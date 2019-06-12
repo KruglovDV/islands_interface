@@ -36,10 +36,13 @@ window.join = function join(channel) { channel.join()
 //                               console.log("Unable to leave", response) })
 //                         }
 
-var game_channel = new_channel("moon", "moon")
-join(game_channel)
+// var game_channel = new_channel("moon", "moon")
+// join(game_channel)
 
-window.game_channel = game_channel;
+// window.game_channel = game_channel;
+
+// game_channel.on("subscribers", response => { console.log("These players have joined: ", response)
+//                                            })
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:

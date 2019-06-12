@@ -2,6 +2,7 @@ defmodule IslandsInterfaceWeb.GameChannel do
   use IslandsInterfaceWeb, :channel
 
   alias IslandsEngine.{Game, GameSupervisor}
+  alias IslandsInterfaceWeb.Presence
 
 
   ## TODO replace it in to core layer
@@ -9,8 +10,13 @@ defmodule IslandsInterfaceWeb.GameChannel do
   Protocol.derive Jason.Encoder, IslandsEngine.Coordinate
   Protocol.derive Jason.Encoder, IslandsEngine.Island
 
-  def join("game:" <> _player, _payload, socket) do
-    {:ok, socket}
+  def join("game:" <> _player, %{"screen_name" => screen_name}, socket) do
+    if authorized?(socket, screen_name) do
+      send(self(), {:after_join, screen_name})
+      {:ok, socket}
+    else
+      {:error, %{reason: "unauthorized"}}
+    end
   end
 
   def handle_in("new_game", _payload, socket) do
@@ -77,15 +83,44 @@ defmodule IslandsInterfaceWeb.GameChannel do
     end
   end
 
+  def handle_in("show_subscribers", _payload, socket) do
+    broadcast! socket, "subscribers", Presence.list(socket)
+    {:noreply, socket}
+  end
+
+  def handle_info({:after_join, screen_name}, socket) do
+    {:ok, _} = Presence.track(socket, screen_name, %{
+          online_at: inspect(System.system_time(:seconds))
+                              })
+    {:noreply, socket}
+  end
+
   defp via("game:" <> player), do: Game.via_tuple(player)
 
   defp board_to_json(board) do
     ## raise error when try to parse MapSet
     ## TODO figure it out because internal representation can change (we shouldn't know it here)
-    newBoard =
     for {key, value} <- board, into: %{}, do:
     {key,
      %{value | coordinates: MapSet.to_list(value.coordinates),
        hit_coordinates: MapSet.to_list(value.hit_coordinates)}}
   end
+
+  defp number_of_players(socket) do
+    socket
+    |> Presence.list()
+    |> Map.keys()
+    |> length()
+  end
+
+  defp existing_player?(socket, screen_name) do
+    socket
+    |> Presence.list()
+    |> Map.has_key?(screen_name)
+  end
+
+  defp authorized?(socket, screen_name) do
+    number_of_players(socket) < 2 && !existing_player?(socket, screen_name)
+  end
+
 end
