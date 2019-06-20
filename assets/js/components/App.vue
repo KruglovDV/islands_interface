@@ -1,14 +1,16 @@
 <template>
   <div id="mainComponent">
-    {{ msg }}
+    <PlayerForm />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'mainComponent',
-    data() {
-      return { msg: 'sdfdsf' };
-    },
-  };
+import PlayerForm from './PlayerForm.vue';
+
+export default {
+  name: 'mainComponent',
+  components: {
+    PlayerForm,
+  }
+};
 </script>
