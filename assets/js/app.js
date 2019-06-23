@@ -2,7 +2,22 @@ import css from "../css/app.css"
 import "phoenix_html"
 import {Socket} from "phoenix"
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 import App from './components/App.vue';
+import store from './store';
+import router from './routes';
+
+Vue.use(VueRouter);
+
+new Vue({
+  el: '#app',
+  render: h => h(App),
+  store,
+  router,
+});
+
+
+
 
 window.Socket = Socket;
 
@@ -41,7 +56,3 @@ window.join = function join(channel) {
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-new Vue({
-  el: '#app',
-  render: h => h(App),
-});
