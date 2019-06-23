@@ -90,8 +90,7 @@ defmodule IslandsInterfaceWeb.GameChannel do
 
   def handle_info({:after_join, screen_name}, socket) do
     {:ok, _} = Presence.track(socket, screen_name, %{
-          online_at: inspect(System.system_time(:seconds))
-                              })
+          online_at: inspect(System.system_time(:seconds))})
     {:noreply, socket}
   end
 
