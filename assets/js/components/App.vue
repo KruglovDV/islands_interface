@@ -8,6 +8,9 @@
       <div class="islandsLinkContainer">
         <router-link to="/newGame">New game</router-link>
       </div>
+      <div class="islandsLinkContainer">
+        <router-link to="/joinGame">Join game</router-link>
+      </div>
     </div>
     <div class="islandsView">
       <router-view></router-view>
