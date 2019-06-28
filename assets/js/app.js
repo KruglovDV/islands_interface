@@ -1,6 +1,6 @@
 import css from "../css/app.css"
 import "phoenix_html"
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './components/App.vue';
@@ -16,26 +16,23 @@ new Vue({
   router,
 });
 
+// window.Socket = Socket;
 
+// var socket = new Socket("/socket", {})
+// socket.connect();
 
-
-window.Socket = Socket;
-
-var socket = new Socket("/socket", {})
-socket.connect();
-
-window.new_channel = function new_channel(subtopic, screen_name) {
-  return socket.channel("game:" + subtopic, {screen_name: screen_name});
-}
-window.join = function join(channel) {
-  channel.join()
-  .receive("ok", response => {
-    console.log("Joined successfully!", response);
-  })
-  .receive("error", response => {
-    console.log("Unable to join", response);
-  })
-}
+// window.new_channel = function new_channel(subtopic, screen_name) {
+//   return socket.channel("game:" + subtopic, {screen_name: screen_name});
+// }
+// window.join = function join(channel) {
+//   channel.join()
+//   .receive("ok", response => {
+//     console.log("Joined successfully!", response);
+//   })
+//   .receive("error", response => {
+//     console.log("Unable to join", response);
+//   })
+// }
 
 // window.leave = function leave(channel) { channel.leave()
 //                           .receive("ok", response => {
