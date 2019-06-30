@@ -20,7 +20,7 @@ import _ from 'lodash';
 
 export default {
   data() {
-    return { gameName: '' };
+    return { gameName: this.$store.state.gameName };
   },
   methods: {
     createGame() {
@@ -29,7 +29,9 @@ export default {
         const message = 'Insert the name';
         this.$store.commit('addNotification', message);
         this.$router.push('/settings');
+        return;
       }
+      this.$store.dispatch('startGame', this.gameName);
     }
   },
 };

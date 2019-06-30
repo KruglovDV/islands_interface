@@ -60,7 +60,7 @@ export default {
   }
 
   .islandsLinkContainer {
-    margin-right: 8px;
+    margin-right: 16px;
   }
 
   .islandsForm {
