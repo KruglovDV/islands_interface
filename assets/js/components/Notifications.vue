@@ -10,24 +10,18 @@
       </div>
       <div
         class="close"
-        @click="closeNotification(notification.id)"
+        @click="removeNotification(notification.id)"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 export default {
-  computed: {
-    notifications() {
-      return this.$store.state.notifications;
-    }
-  },
-  methods: {
-    closeNotification(id) {
-      this.$store.commit("removeNotification", id);
-    },
-  },
+  computed: mapState(['notifications']),
+  methods: mapMutations(['removeNotification']),
 }
 </script>
 

@@ -1,3 +1,5 @@
+import { generateGameField } from './utils';
+
 const mutations =  {
     setPlayerName(state, name) {
     state.playerName = name;
@@ -14,6 +16,9 @@ const mutations =  {
   },
   removeNotification(state, id) {
     state.notifications = _.reject(state.notifications, { id });
+  },
+  setGameField(state) {
+    state.gameField = generateGameField();
   }
 }
 

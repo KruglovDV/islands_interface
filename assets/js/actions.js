@@ -9,18 +9,12 @@ const actions = {
         state.playerName,
         (event, data) => dispatch('handleReceiveMessage', event, data),
       );
-      api.send(
-        'new_game',
-        null,
-        () => router.push('/game'),
-        (e) => {
-          console.log(e);
-          commit('addNotification', 'Error can\'t create game!');
-        },
-      )
+      await api.send('new_game', null);
+      commit('setGameField');
+      router.push('/game');
     } catch (e) {
       console.log(e);
-      commit('addNotification', 'Error unable to connect!');
+      commit('addNotification', e.reason.toString());
     }
   },
   handleReceiveMessage({ dispatch }, event, data) {

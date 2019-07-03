@@ -54,10 +54,12 @@ class APIService {
     return this.init(this.socket, game, player, handleReceiveMessage);
   }
 
-  send = (message, data, handleOk, handleError) => {
-    this.channel.push(message, data)
-      .receive('ok', handleOk)
-      .receive('error', handleError);
+  send = (message, data) => {
+    return new Promise((resolve, reject) => {
+      this.channel.push(message, data)
+      .receive('ok', (res) => resolve(res))
+      .receive('error', (err) => reject(err));
+    });
   }
 
   gameChannelSubscribe = (channel, handleReceiveMessage) => {

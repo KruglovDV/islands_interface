@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     playerName: 'testUser',
     gameName: 'testGame',
     notifications: [],
+    gameField: null,
   },
   mutations,
   actions,
